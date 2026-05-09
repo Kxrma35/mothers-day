@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Mother's Day</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lora:ital,wght@1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 50% 35%, #1a0522 0%, #090010 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: 'Dancing Script', cursive;
+}
+
+/* ══════════════════ GARDEN ROW ══════════════════ */
+.garden {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 18px;
+  padding: 0 12px;
+}
+
+/* ── shared flower wrapper ── */
+.flower-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ══════════════════ PETALS (shared mechanic) ══════════════════ */
+.petal {
+  position: absolute;
+  transform-origin: center bottom;
+  transform: rotate(var(--r)) scaleY(0) scaleX(0.15);
+  animation: bloom var(--spd, 0.6s) cubic-bezier(0.34,1.45,0.64,1) var(--d) forwards;
+}
+@keyframes bloom {
+  to { transform: rotate(var(--r)) scaleY(1) scaleX(1); }
+}
+
+/* ══════════════════ 1 · DAISY ══════════════════ */
+.daisy-head {
+  position: relative;
+  width: 130px; height: 130px;
+}
+.daisy-head .petal {
+  width: 12px; height: 52px;
+  left: calc(50% - 6px); bottom: 50%;
+  border-radius: 50% 50% 30% 30%;
+  background: linear-gradient(to top, #ffe0f0, #fff9fc);
+  --spd: 0.45s;
+}
+.daisy-center {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%,-50%) scale(0);
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff9c4, #f9a825 60%, #e65100);
+  z-index: 10;
+  animation: cpop 0.4s cubic-bezier(0.34,1.6,0.64,1) var(--cd) forwards;
+}
+
+/* ══════════════════ 2 · TULIP ══════════════════ */
+.tulip-head {
+  position: relative;
+  width: 90px; height: 110px;
+}
+.tulip-petal {
+  position: absolute;
+  bottom: 0;
+  width: 54px; height: 90px;
+  border-radius: 50% 50% 20% 20% / 55% 55% 30% 30%;
+  transform-origin: center bottom;
+  transform: rotate(var(--r)) scaleY(0);
+  animation: bloom var(--spd,0.55s) cubic-bezier(0.34,1.4,0.64,1) var(--d) forwards;
+  left: calc(50% - 27px);
+}
+.tulip-petal.p1 { background: linear-gradient(170deg,#ff8a65,#e53935,#b71c1c); z-index:3; }
+.tulip-petal.p2 { background: linear-gradient(170deg,#ffab91,#ef5350,#c62828); transform-origin: left bottom; z-index:2; }
+.tulip-petal.p3 { background: linear-gradient(170deg,#ffab91,#ef5350,#c62828); transform-origin: right bottom; z-index:2; }
+
+/* ══════════════════ 3 · MAIN DAHLIA (center) ══════════════════ */
+.dahlia-head {
+  position: relative;
+  width: 260px; height: 260px;
+}
+.dahlia-head .petal {
+  border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+}
+.l1 .petal {
+  width: 58px; height: 114px;
+  left: calc(50% - 29px); bottom: 50%;
+  background: linear-gradient(170deg, #ff5fa0 0%, #c2185b 55%, #880e4f 100%);
+}
+.l2 .petal {
+  width: 50px; height: 96px;
+  left: calc(50% - 25px); bottom: 50%;
+  background: linear-gradient(170deg, #ffadd4 0%, #e91e8c 50%, #ad1457 100%);
+}
+.l3 .petal {
+  width: 38px; height: 72px;
+  left: calc(50% - 19px); bottom: 50%;
+  background: linear-gradient(170deg, #fff0f6 0%, #f8bbd0 50%, #f48fb1 100%);
+}
+.dahlia-glow {
+  position: absolute;
+  inset: -35px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(220,60,120,0.2) 0%, transparent 70%);
+  opacity: 0;
+  animation: glow-in 1.5s ease-out 4.2s forwards;
+}
+@keyframes glow-in { to { opacity:1; } }
+
+.dahlia-center {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%,-50%) scale(0);
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 38%, #fffde7, #ffd54f 35%, #ff8f00 75%, #e65100);
+  box-shadow: 0 0 16px 4px rgba(255,213,79,0.6), 0 0 36px 8px rgba(255,143,0,0.25);
+  z-index: 20;
+  animation: cpop 0.5s cubic-bezier(0.34,1.6,0.64,1) var(--cd) forwards;
+}
+
+/* ══════════════════ 4 · SUNFLOWER ══════════════════ */
+.sun-head {
+  position: relative;
+  width: 150px; height: 150px;
+}
+.sun-head .petal {
+  width: 18px; height: 62px;
+  left: calc(50% - 9px); bottom: 50%;
+  border-radius: 40% 40% 15% 15%;
+  background: linear-gradient(to top, #ff8f00, #ffd600, #fff9c4);
+  --spd: 0.5s;
+}
+.sun-center {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%,-50%) scale(0);
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #5d4037 0%, #3e2723 70%);
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+  z-index: 10;
+  animation: cpop 0.4s cubic-bezier(0.34,1.6,0.64,1) var(--cd) forwards;
+}
+.sun-center::after {
+  content:'';
+  position:absolute; inset:6px;
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(255,200,0,0.25) 0%, transparent 70%);
+}
+
+/* ══════════════════ 5 · ASTER ══════════════════ */
+.aster-head {
+  position: relative;
+  width: 120px; height: 120px;
+}
+.aster-head .petal {
+  width: 14px; height: 50px;
+  left: calc(50% - 7px); bottom: 50%;
+  border-radius: 45% 45% 20% 20%;
+  background: linear-gradient(to top, #7b1fa2, #ce93d8, #f3e5f5);
+  --spd: 0.48s;
+}
+.aster-center {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%,-50%) scale(0);
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff9c4, #fdd835 60%, #f57f17);
+  z-index: 10;
+  animation: cpop 0.4s cubic-bezier(0.34,1.6,0.64,1) var(--cd) forwards;
+}
+
+@keyframes cpop { to { transform: translate(-50%,-50%) scale(1); } }
+
+/* ══════════════════ STEMS ══════════════════ */
+.stem-box {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.stem {
+  width: var(--sw, 5px);
+  height: 0;
+  background: linear-gradient(to bottom, #388e3c, #1b5e20);
+  border-radius: 0 0 3px 3px;
+  position: relative;
+  animation: stem-grow var(--sgd, 1s) cubic-bezier(0.4,0,0.2,1) var(--sds, 0.3s) forwards;
+}
+@keyframes stem-grow { to { height: var(--sh); } }
+
+.leaf {
+  position: absolute;
+  height: 18px;
+  background: linear-gradient(135deg, #43a047, #1b5e20);
+  transform: scaleX(0);
+  animation: leaf-out 0.45s ease-out forwards;
+}
+.leaf-l {
+  border-radius: 70% 0 70% 0;
+  transform-origin: 0% 50%;
+}
+.leaf-r {
+  border-radius: 0 70% 0 70%;
+  transform-origin: 100% 50%;
+}
+@keyframes leaf-out { to { transform: scaleX(1); } }
+
+/* ══════════════════ MESSAGE ══════════════════ */
+.message {
+  margin-top: 22px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: msg-rise 1.4s ease-out var(--msg-delay, 5.5s) forwards;
+}
+@keyframes msg-rise { to { opacity:1; transform:translateY(0); } }
+
+.msg-line1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+  color: #ffb3d1;
+  text-shadow: 0 0 16px rgba(255,105,180,0.75), 0 0 40px rgba(220,60,120,0.35), 0 2px 4px rgba(0,0,0,0.5);
+  line-height: 1.2;
+}
+.msg-line2 {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: clamp(0.95rem, 2.4vw, 1.15rem);
+  color: rgba(255,210,230,0.88);
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.heart {
+  display: inline-block;
+  color: #ff4d88;
+  font-style: normal;
+  animation: hpulse 1.6s ease-in-out infinite;
+  text-shadow: 0 0 8px rgba(255,77,136,0.6);
+  font-size: 1.1em;
+}
+.heart:nth-child(1){ animation-delay: 0s; }
+.heart:nth-child(2){ animation-delay: 0.25s; }
+.heart:nth-child(3){ animation-delay: 0.5s; }
+@keyframes hpulse {
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.35); }
+}
+
+/* ══════════════════ PARTICLES ══════════════════ */
+.particle {
+  position: fixed;
+  pointer-events: none;
+  border-radius: 50% 50% 40% 40%;
+  opacity: 0;
+  animation: drift var(--dur) ease-in var(--delay) infinite;
+}
+@keyframes drift {
+  0%  { transform: translateY(0) rotate(0deg) scale(0); opacity:0; }
+  10% { opacity:.6; transform: translateY(-6vh) rotate(15deg) scale(1); }
+  85% { opacity:.15; }
+  100%{ transform: translateY(-108vh) rotate(360deg) scale(0.3); opacity:0; }
+}
+</style>
+</head>
+<body>
+
+<div class="garden">
+
+  <!-- 1 · DAISY -->
+  <div class="flower-unit">
+    <div class="daisy-head">
+      <!-- 16 petals every 22.5deg -->
+      <div class="petal" style="--r:0deg;    --d:1.5s"></div>
+      <div class="petal" style="--r:22.5deg; --d:1.55s"></div>
+      <div class="petal" style="--r:45deg;   --d:1.6s"></div>
+      <div class="petal" style="--r:67.5deg; --d:1.65s"></div>
+      <div class="petal" style="--r:90deg;   --d:1.7s"></div>
+      <div class="petal" style="--r:112.5deg;--d:1.75s"></div>
+      <div class="petal" style="--r:135deg;  --d:1.8s"></div>
+      <div class="petal" style="--r:157.5deg;--d:1.85s"></div>
+      <div class="petal" style="--r:180deg;  --d:1.9s"></div>
+      <div class="petal" style="--r:202.5deg;--d:1.95s"></div>
+      <div class="petal" style="--r:225deg;  --d:2.0s"></div>
+      <div class="petal" style="--r:247.5deg;--d:2.05s"></div>
+      <div class="petal" style="--r:270deg;  --d:2.1s"></div>
+      <div class="petal" style="--r:292.5deg;--d:2.15s"></div>
+      <div class="petal" style="--r:315deg;  --d:2.2s"></div>
+      <div class="petal" style="--r:337.5deg;--d:2.25s"></div>
+      <div class="daisy-center" style="--cd:2.4s"></div>
+    </div>
+    <div class="stem-box" style="width:80px; height:100px;">
+      <div class="stem" style="--sh:100px; --sw:4px; --sgd:0.9s; --sds:0.2s;">
+        <div class="leaf leaf-l" style="width:32px; left:4px; top:28px; animation-delay:1.0s;"></div>
+        <div class="leaf leaf-r" style="width:32px; right:4px; top:56px; animation-delay:1.25s;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2 · TULIP -->
+  <div class="flower-unit">
+    <div class="tulip-head">
+      <!-- center petal -->
+      <div class="tulip-petal p1" style="--r:0deg; --d:2.0s;"></div>
+      <!-- left petal -->
+      <div class="tulip-petal p2" style="--r:-28deg; --d:2.1s; --spd:0.5s;"></div>
+      <!-- right petal -->
+      <div class="tulip-petal p3" style="--r:28deg;  --d:2.1s; --spd:0.5s;"></div>
+    </div>
+    <div class="stem-box" style="width:80px; height:130px;">
+      <div class="stem" style="--sh:130px; --sw:5px; --sgd:1.0s; --sds:0.25s;">
+        <div class="leaf leaf-l" style="width:38px; left:5px; top:40px; animation-delay:1.1s;"></div>
+        <div class="leaf leaf-r" style="width:38px; right:5px; top:80px; animation-delay:1.35s;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 · MAIN DAHLIA (center, tallest) -->
+  <div class="flower-unit">
+    <div class="dahlia-head">
+      <div class="dahlia-glow"></div>
+      <div class="l1">
+        <div class="petal" style="--r:0deg;   --d:2.5s"></div>
+        <div class="petal" style="--r:45deg;  --d:2.6s"></div>
+        <div class="petal" style="--r:90deg;  --d:2.7s"></div>
+        <div class="petal" style="--r:135deg; --d:2.8s"></div>
+        <div class="petal" style="--r:180deg; --d:2.9s"></div>
+        <div class="petal" style="--r:225deg; --d:3.0s"></div>
+        <div class="petal" style="--r:270deg; --d:3.1s"></div>
+        <div class="petal" style="--r:315deg; --d:3.2s"></div>
+      </div>
+      <div class="l2">
+        <div class="petal" style="--r:22.5deg;  --d:3.35s"></div>
+        <div class="petal" style="--r:67.5deg;  --d:3.45s"></div>
+        <div class="petal" style="--r:112.5deg; --d:3.55s"></div>
+        <div class="petal" style="--r:157.5deg; --d:3.65s"></div>
+        <div class="petal" style="--r:202.5deg; --d:3.75s"></div>
+        <div class="petal" style="--r:247.5deg; --d:3.85s"></div>
+        <div class="petal" style="--r:292.5deg; --d:3.95s"></div>
+        <div class="petal" style="--r:337.5deg; --d:4.05s"></div>
+      </div>
+      <div class="l3">
+        <div class="petal" style="--r:0deg;   --d:4.2s"></div>
+        <div class="petal" style="--r:45deg;  --d:4.25s"></div>
+        <div class="petal" style="--r:90deg;  --d:4.3s"></div>
+        <div class="petal" style="--r:135deg; --d:4.35s"></div>
+        <div class="petal" style="--r:180deg; --d:4.4s"></div>
+        <div class="petal" style="--r:225deg; --d:4.45s"></div>
+        <div class="petal" style="--r:270deg; --d:4.5s"></div>
+        <div class="petal" style="--r:315deg; --d:4.55s"></div>
+      </div>
+      <div class="dahlia-center" style="--cd:4.7s;"></div>
+    </div>
+    <div class="stem-box" style="width:80px; height:160px;">
+      <div class="stem" style="--sh:160px; --sw:6px; --sgd:1.2s; --sds:0.2s;">
+        <div class="leaf leaf-l" style="width:44px; left:6px; top:50px; animation-delay:1.1s;"></div>
+        <div class="leaf leaf-r" style="width:44px; right:6px; top:100px; animation-delay:1.4s;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 · SUNFLOWER -->
+  <div class="flower-unit">
+    <div class="sun-head">
+      <!-- 12 petals every 30deg -->
+      <div class="petal" style="--r:0deg;   --d:2.1s"></div>
+      <div class="petal" style="--r:30deg;  --d:2.18s"></div>
+      <div class="petal" style="--r:60deg;  --d:2.26s"></div>
+      <div class="petal" style="--r:90deg;  --d:2.34s"></div>
+      <div class="petal" style="--r:120deg; --d:2.42s"></div>
+      <div class="petal" style="--r:150deg; --d:2.5s"></div>
+      <div class="petal" style="--r:180deg; --d:2.58s"></div>
+      <div class="petal" style="--r:210deg; --d:2.66s"></div>
+      <div class="petal" style="--r:240deg; --d:2.74s"></div>
+      <div class="petal" style="--r:270deg; --d:2.82s"></div>
+      <div class="petal" style="--r:300deg; --d:2.9s"></div>
+      <div class="petal" style="--r:330deg; --d:2.98s"></div>
+      <div class="sun-center" style="--cd:3.1s;"></div>
+    </div>
+    <div class="stem-box" style="width:80px; height:120px;">
+      <div class="stem" style="--sh:120px; --sw:5px; --sgd:0.95s; --sds:0.3s;">
+        <div class="leaf leaf-l" style="width:36px; left:5px; top:36px; animation-delay:1.1s;"></div>
+        <div class="leaf leaf-r" style="width:36px; right:5px; top:70px; animation-delay:1.35s;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5 · ASTER -->
+  <div class="flower-unit">
+    <div class="aster-head">
+      <!-- 12 petals every 30deg -->
+      <div class="petal" style="--r:0deg;   --d:1.6s"></div>
+      <div class="petal" style="--r:30deg;  --d:1.66s"></div>
+      <div class="petal" style="--r:60deg;  --d:1.72s"></div>
+      <div class="petal" style="--r:90deg;  --d:1.78s"></div>
+      <div class="petal" style="--r:120deg; --d:1.84s"></div>
+      <div class="petal" style="--r:150deg; --d:1.9s"></div>
+      <div class="petal" style="--r:180deg; --d:1.96s"></div>
+      <div class="petal" style="--r:210deg; --d:2.02s"></div>
+      <div class="petal" style="--r:240deg; --d:2.08s"></div>
+      <div class="petal" style="--r:270deg; --d:2.14s"></div>
+      <div class="petal" style="--r:300deg; --d:2.2s"></div>
+      <div class="petal" style="--r:330deg; --d:2.26s"></div>
+      <div class="aster-center" style="--cd:2.4s;"></div>
+    </div>
+    <div class="stem-box" style="width:80px; height:90px;">
+      <div class="stem" style="--sh:90px; --sw:4px; --sgd:0.85s; --sds:0.2s;">
+        <div class="leaf leaf-l" style="width:30px; left:4px; top:26px; animation-delay:1.0s;"></div>
+        <div class="leaf leaf-r" style="width:30px; right:4px; top:54px; animation-delay:1.2s;"></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MESSAGE -->
+<div class="message" style="--msg-delay: 5.4s;">
+  <div class="msg-line1">Happy Mother's Day, Mom</div>
+  <div class="msg-line2">
+    I'll always love you
+    <span class="heart">&#10084;</span>
+    <span class="heart">&#10084;</span>
+    <span class="heart">&#10084;</span>
+  </div>
+</div>
+
+<script>
+  const colors = ['#ff80ab','#f48fb1','#ffc1e3','#ff4081','#f8bbd0','#fff9c4','#ce93d8','#ffe0f0'];
+  for (let i = 0; i < 35; i++) {
+    const el = document.createElement('div');
+    el.className = 'particle';
+    const size = 4 + Math.random() * 9;
+    el.style.cssText = [
+      `width:${size}px`,
+      `height:${size*1.4}px`,
+      `background:${colors[Math.floor(Math.random()*colors.length)]}`,
+      `left:${Math.random()*100}vw`,
+      `bottom:-20px`,
+      `--dur:${5+Math.random()*8}s`,
+      `--delay:${Math.random()*9}s`,
+      `transform:rotate(${Math.random()*360}deg)`
+    ].join(';');
+    document.body.appendChild(el);
+  }
+</script>
+</body>
+</html>
